@@ -75,7 +75,6 @@
   var address, width, height, zoom, link, mapsKey;
   
   function debounce (func, wait, immediate) {
-    console.log('hello world')
     var timeout;
     return function() {
       var context = this, args = arguments;
