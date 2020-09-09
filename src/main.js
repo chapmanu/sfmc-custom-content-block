@@ -61,4 +61,4 @@ sdk.getData(async (data) => {
 	initializeApp(data);
 });
 
-// sdk.triggerAuth(window.app.appID);
+sdk.triggerAuth(window.app.appID);

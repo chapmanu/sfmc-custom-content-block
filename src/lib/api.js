@@ -1,4 +1,5 @@
 async function post (url, data) {
+	console.log("IM THE URL", url);
 	const response = await fetch('/proxy/' + url, {
 		method: 'POST',
 		body: JSON.stringify(data),
