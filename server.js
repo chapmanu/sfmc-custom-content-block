@@ -8,12 +8,28 @@ const request = require('request');
 const EventEmitter = require('events').EventEmitter;
 const fs = require('fs');
 const https = require('https');
+const axios = require('axios');
 
 if (process.env.NODE_ENV === 'development') {
 	require('dotenv').config();
 }
 
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const store = new MongoDBStore(
+	{
+		uri: `mongodb://${process.env.DBUSER}:${process.env.DBPASSWORD}@ds211708.mlab.com:11708/salesforce`,
+		collection: 'mySessions'
+	},
+	(err) => console.log(`Im the error on db conn ${err}`)
+);
+
+store.on('error', function(error) {
+  console.log(error);
+});
+
 const app = express();
+// app.set('trust proxy', 1)
 
 // wherever this is hosted needs to have those
 // environment variables set to the MC app values
@@ -23,21 +39,39 @@ const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const appID = process.env.APP_ID;
 const authEmitter = new EventEmitter();
+const sess = {
+	secret: process.env.COOKIE_SECRET,
+	store,
+	cookie: {
+	 secure: false,
+	 maxAge: 1000 * 60 * 18 // 18 minutes
+	},
+	resave: true,
+  saveUninitialized: true
+}
+
+if (process.env.NODE_ENV === 'production') {
+	app.set('trust proxy', 1);
+	sess.cookie.secure = true;
+}
 
 function waitForAuth(req, ttl) {
-	console.log("IM WAITING FOR AUTH")
 	return new Promise(function (resolve, reject) {
 		const timeout = setTimeout(
 			function () {
-				console.log("IM REJECTING THE AUTH")
 				removeListener();
 				reject('auth timeout expired');
 			},
 			ttl
 		);
 
+		if (req.session && req.session.accessToken) {
+			clearTimeout();
+			removeListener();
+			resolve();
+		}
+
 		const listener = function (authData) {
-			console.log("IM IN THE LISTENER")
 			if (authData.sessionID === req.sessionID) {
 				req.session.accessToken = authData.accessToken;
 				clearTimeout(timeout);
@@ -55,11 +89,10 @@ function waitForAuth(req, ttl) {
 }
 
 function verifyAuth(req, res, next) {
-	console.log("IM IN THE VERIFY AUTH")
 
 	if (req.session && req.session.accessToken) {
-		console.log("I HAVE A SESSION IN AUTH")
 		next();
+		return;
 	}
 
 	waitForAuth(req, 10000)
@@ -73,20 +106,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // make calls to the MC API. Instead it keeps a session
 // with the node layer here and sends calls to a node proxy
 // that will authenticate against the MC and proxy API calls
-// for the UI. The following code is storing sessions in memory
-// for demo purposes and cannot be used for a prod setup.
-// instead, use a persistent storage like redis or mongo
-// with the session library
-app.use(session({
-	name: 'mcisv',
-	secret: 'my-app-super-secret-session-token',
-	cookie: {
-		maxAge: 1000 * 60 * 60 * 24,
-		secure: false
-	},
-	saveUninitialized: true,
-	resave: false
-}));
+// for the UI.
+app.use(session(sess));
 
 // app.use('/', express.static('dist'));
 app.use('/public', express.static('dist'));
@@ -100,17 +121,41 @@ app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store');
   next();
 });
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get(['/', '/block/:assetId(\\d+)'], (req, res) => {
-	console.log("WHEN AM I HITTING THIS")
-	
+app.get(['/', '/block/:assetId(\\d+)'], (req, res) => {	
 	res.render('index', {
 		app: JSON.stringify({
 			appID,
 			...req.params
 		})
 	});
+});
+
+app.use((req, res, next) => {
+	// console.log("HELLO")
+	if (!req.session || !req.session.accessToken) {
+		axios({
+			method: 'post',
+			url: 'https://mc9-x13m9sbbt19l3fr2xbvxm8l1.auth.marketingcloudapis.com/v2/token',
+			data: {
+				grant_type: 'client_credentials',
+				client_id: clientId,
+				client_secret: clientSecret
+			}
+		}).then((res) => {
+			req.session.accessToken = res.data.access_token;
+			authEmitter.emit('authed', {
+				sessionID: req.sessionID,
+				accessToken: res.data.access_token
+			});
+			next();
+		}).catch(err => {
+			console.log(err);
+		});
+	}
+	
 });
 
 // the code below proxies REST calls from the UI
@@ -121,7 +166,7 @@ app.use('/proxy',
 	createProxyMiddleware({
 		logLevel: 'debug',
 		changeOrigin: true,
-		target: 'https://mc9-x13m9sbbt19l3fr2xbvxm8l1.com/',
+		target: 'https://mc9-x13m9sbbt19l3fr2xbvxm8l1.rest.marketingcloudapis.com/',
 		onError: console.log,
 		protocolRewrite: 'https',
 		pathRewrite: {
@@ -138,48 +183,6 @@ app.use('/proxy',
 		},
 	})
 );
-
-// MC Oath will post to whatever URL you specify as the login URL
-// in the app center when the uer opens the app. In our case /login
-// the posted jwt has a refreshToken that we can use to get
-// an access token. That access is used to authenticate MC API calls
-app.post('/login', (req, res, next) => {
-	console.log("IM NOT HITTING ThIS AM I")
-	const encodedJWT = req.body.jwt;
-	const decodedJWT = jwt.decode(encodedJWT, secret);
-	const restInfo = decodedJWT.request.rest;
-	// the call to the auth endpoint is done right away
-	// for demo purposes. In a prod app, you will want to
-	// separate that logic out and repeat this process
-	// everytime the access token expires
-	request.post(restInfo.authEndpoint, {
-		form: {
-			clientId: clientId,
-			clientSecret: clientSecret,
-			refreshToken: restInfo.refreshToken,
-			accessType: 'offline'
-		}
-	}, (error, response, body) => {
-		if (!error && response.statusCode == 200) {
-			const result = JSON.parse(body);
-			// storing the refresh token is useless in the demo
-			// but in a prod app it will be used next time we
-			// want to refresh the access token
-			req.session.refreshToken = result.refreshToken;
-			// the access token below can authenticate
-			// against the MC API
-			req.session.accessToken = result.accessToken;
-			req.session.save();
-			authEmitter.emit('authed', {
-				sessionID: req.sessionID,
-				accessToken: result.accessToken
-			});
-		}
-		// we redirect to the app homepage
-		res.redirect('/');
-		next();
-	});
-});
 
 app.set('etag', false);
 app.listen(port, () => console.log(`App listening on ${port}`));

@@ -9,7 +9,6 @@ class TemplatingBlockApp extends HTMLElement {
 
 	connectedCallback() {
 		const dispatchEvent = type => e => {
-			console.log(e)
 			return this.dispatchEvent(new CustomEvent('change', {
 				detail: {
 					...e.detail,

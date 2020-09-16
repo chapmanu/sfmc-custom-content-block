@@ -7,6 +7,14 @@ async function post (url, data) {
 	return await response.json();
 }
 
+async function get(url, data) {
+	console.log("IM THE URL", url);
+	const response = await fetch('/proxy/' + url, {
+		method: 'GET',
+	});
+	return await response.json();
+}
+
 export async function getBlock(id) {
 	const response = await fetch(`/proxy/asset/v1/content/assets/${id}`);
 	return await response.json();
@@ -26,14 +34,16 @@ function getImagesCached() {
 	let images;
 	return async () => {
 		if (!images) {
-			images = post('asset/v1/content/assets/query', {
+			images = await post('/asset/v1/content/assets/query', {
 				query: {
-					property: "assetType.id",
-					simpleOperator: "in",
-					value: [20, 22, 23, 28]
+					property: 'fileProperties.extension',
+					simpleOperator: 'in',
+					value: ["tif", "tiff", "bmp","jpg", "jpeg", "gif", "png"]
 				}
 			});
 		}
+		debugger 
+		console.log(images);
 		return images;
 	}
 }
