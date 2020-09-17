@@ -14,18 +14,8 @@ export function parseTemplate (template) {
 	return fields;
 }
 
-export function getHtml(template, fields = [], isFallback) {
-	let idx = 0;
-	return template.content.replace(placeholderRegex,
-		(match, type, title, placeholder) => {
-			let replaceVal = '';
-			if (fields[idx] && fields[idx].value) {
-				replaceVal = fields[idx].value;
-			} else if (isFallback) {
-				replaceVal = placeholder;
-			}
-			idx++;
-			return replaceVal;
-		}
-	);
+export function getHtml({lpHeader='Landing Page Heading', lpSubheader='Landing Page Subheading', lpBackgroundImage = ''}) {
+	debugger
+	return `<div><h1>${lpHeader}</h1><h3>${lpSubheader}</h3><img src="${lpBackgroundImage}"/></div>`;
+
 }

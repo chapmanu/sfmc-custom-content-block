@@ -1,20 +1,22 @@
 # Chapman Salesforce Custom Content Blocks
 
-Reccomend completing salesforce trailhead [here]() for more info on creating Custom Content Blocks
+## Recommended Reading/Viewing
 
-Also Reccomend watching developers walk through of Custom Content Blocks [here]()
+Salesforce Trailhead: Salesforce Trailhead [here](https://trailhead.salesforce.com/content/learn/modules/content-builder-block-sdk) for more info on creating Custom Content Blocks
+
+Salesfoce Developer Walkthrough: Salesforce developer walks through of Custom Content Blocks [here](https://www.youtube.com/watch?v=-02YOSySYcA&feature=youtu.be&t=667)
 
 ## Salesforce Cloud Package
 
-To create a Custom Content Block a salesforce package needs to be installed with the proper configuration. Currently IS&T only has access to the create and install packages.
+To create a Custom Content Block a salesforce package needs to be installed with the proper configuration. Currently IS&T only has access to create and install packages.
 
 ### Custom Content Block Component
 
-Start by installing the component Custom Content Block. Enter the appropriate name and description which will be used intarnally for Salesforce display. The `Endpoint URL` is the url where the component is hosted, for more info see [hosting section](#hosting) for more details about the Custom Block Content Component see [salesforce documentation](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/create-content-block.htm)
+Start by installing the component Custom Content Block. Enter the appropriate Name and Description which will be used intarnally for Salesforce display when selecting the Custom Content Block. The `Endpoint URL` is the url where the component is hosted, for more info see [hosting section](#hosting). For more details about the Custom Block Content Component see [salesforce documentation](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/create-content-block.htm)
 
 ### API Integration Component
 
-To access salesforce assets and data or to update data the package will need an API integration. Which will generate the necessary auth routes for Server to Server API access see [salesforce documentation](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/api-integration.htm)
+To retrieve salesforce assets and data or to update data the package will need an API integration. Which will generate the necessary auth routes for Server to Server API access see [salesforce documentation](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/api-integration.htm)
 
 The API integration will also need the permission scopes of the Custom Content Block i.e. read/write access for assets and data. For a list of permissions see [salesforce documentation](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/data-access-permissions.htm)
 

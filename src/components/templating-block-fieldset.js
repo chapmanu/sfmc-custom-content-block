@@ -1,4 +1,5 @@
 import './image-selector';
+// import './heading-block';
 
 const template = document.createElement('template');
 template.innerHTML = `

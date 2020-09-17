@@ -134,7 +134,6 @@ app.get(['/', '/block/:assetId(\\d+)'], (req, res) => {
 });
 
 app.use((req, res, next) => {
-	// console.log("HELLO")
 	if (!req.session || !req.session.accessToken) {
 		axios({
 			method: 'post',

@@ -1,5 +1,4 @@
 async function post (url, data) {
-	console.log("IM THE URL", url);
 	const response = await fetch('/proxy/' + url, {
 		method: 'POST',
 		body: JSON.stringify(data),
@@ -8,7 +7,6 @@ async function post (url, data) {
 }
 
 async function get(url, data) {
-	console.log("IM THE URL", url);
 	const response = await fetch('/proxy/' + url, {
 		method: 'GET',
 	});
@@ -42,8 +40,7 @@ function getImagesCached() {
 				}
 			});
 		}
-		debugger 
-		console.log(images);
+
 		return images;
 	}
 }

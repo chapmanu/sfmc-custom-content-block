@@ -33,7 +33,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --trace-warnings server.js",
     "build": "webpack",
-    "watch": "webpack --watch",
+    "watch": "webpack -d --watch --mode development",
     "deploy": "heroku run sequelize db:migrate --env production -m --app production-app-name"
   },
   "author": "",
