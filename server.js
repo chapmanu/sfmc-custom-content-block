@@ -3,8 +3,6 @@ const session = require('express-session');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser');
-const jwt = require('jwt-simple');
-const request = require('request');
 const EventEmitter = require('events').EventEmitter;
 const fs = require('fs');
 const https = require('https');
@@ -20,9 +18,7 @@ const store = new MongoDBStore(
 	{
 		uri: `mongodb://${process.env.DBUSER}:${process.env.DBPASSWORD}@ds211708.mlab.com:11708/salesforce`,
 		collection: 'mySessions'
-	},
-	(err) => console.log(`Im the error on db conn ${err}`)
-);
+	});
 
 store.on('error', function(error) {
   console.log(error);

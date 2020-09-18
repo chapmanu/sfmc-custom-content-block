@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 const placeholderRegex = /\[\[(\w+)\|([^|]+)\|([^\]]*)\]\]/g;
 
 export function parseTemplate (template) {
@@ -14,8 +16,15 @@ export function parseTemplate (template) {
 	return fields;
 }
 
-export function getHtml({lpHeader='Landing Page Heading', lpSubheader='Landing Page Subheading', lpBackgroundImage = ''}) {
+export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lpForm=''}) {
 	debugger
-	return `<div><h1>${lpHeader}</h1><h3>${lpSubheader}</h3><img src="${lpBackgroundImage}"/></div>`;
+	return `
+	<div>
+		<h1>${lpHeader}</h1><h3>${lpSubheader}</h3><img src="${lpBackgroundImage}"/>
+	</div>
+	<div>
+		${lpForm}
+	</div>
+	`;
 
 }

@@ -46,6 +46,10 @@ Front end requests are proxied on the server to the REST API endpoint created wh
 
 ### Assets
 
+### Sessions
+
+Each API requests needs to be served with an access token in the headers with the `Authorization` value and access token. [Salesforce documentation]() recommends storing the access token to prevent requesting an access token for each request. Access tokens are valid for 20 minutes and is recommended you retrieve a new token every 18 minutes. `mongoDB` using mLab with [`express-session`](https://github.com/expressjs/session) along with [`connect-mongodb-session`](https://github.com/mongodb-js/connect-mongodb-session#readme) are used to create sessions and store the access token for requests made in the 18 minute valid access token window. Afterward the token is then refreshed on the next requests. 
+
 #### Images
 
 Images are requested using the `query` type outlined in the [salesforce documentation](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-apis.meta/mc-apis/routes.htm#detail_advancedQuery) for the advanced query. It is currently querying by file extensions specifically `["tif", "tiff", "bmp","jpg", "jpeg", "gif", "png"]`

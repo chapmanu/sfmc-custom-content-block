@@ -1,5 +1,5 @@
 import './templating-block-fieldset';
-import './heading-block';
+import './fields-block';
 // import './imageSelector'
 
 class TemplatingBlockApp extends HTMLElement {
@@ -34,8 +34,8 @@ class TemplatingBlockApp extends HTMLElement {
 		this.fieldSet = document.createElement('templating-block-fieldset');
 		this.appendChild(this.fieldSet);
 
-		this.headingBlock = document.createElement('heading-block');
-		this.appendChild(this.headingBlock);
+		this.fieldsBlock = document.createElement('fields-block');
+		this.appendChild(this.fieldsBlock);
 
 		// this.fieldSet.addEventListener('change', dispatchEvent('fields'));
 	}
