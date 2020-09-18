@@ -21,7 +21,6 @@ class ImageSelector extends HTMLElement {
 		this.getElementsByTagName('button')[0].addEventListener('click', this._toggleSelector);
 
 		this.addEventListener('change', e => {
-			debugger
 			this.value = e.detail.lpBackgroundImage;
 			this._toggleSelector();
 		});

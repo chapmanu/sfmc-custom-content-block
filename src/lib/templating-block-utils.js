@@ -17,14 +17,20 @@ export function parseTemplate (template) {
 }
 
 export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lpForm=''}) {
-	debugger
 	return `
-	<div>
-		<h1>${lpHeader}</h1><h3>${lpSubheader}</h3><img src="${lpBackgroundImage}"/>
+	<div align="center" class="smc-lp__data-container">
+		<div class="smc-lp__text-conatiner">
+			<h1 class="smc-lp__title">
+				${lpHeader}
+			</h1>
+			<p class="smc-lp__description">
+				${lpSubheader}
+			</p>
+		</div>
+		<div class="smc-lp__form-container">
+			${lpForm}
+		</div>
+		<img src="${lpBackgroundImage}"/>
 	</div>
-	<div>
-		${lpForm}
-	</div>
-	`;
-
+`;
 }

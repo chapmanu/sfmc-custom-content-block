@@ -16,7 +16,6 @@ class ImageCard extends HTMLElement {
 		this.getElementsByTagName('img')[0].src = this.getAttribute('url');
 
 		this.addEventListener('click', () => {
-			debugger
 			this.dispatchEvent(new CustomEvent('change', {
 				detail: {
 					lpBackgroundImage: this.getAttribute('url')

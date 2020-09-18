@@ -47,8 +47,6 @@ class HeadingBlock extends HTMLElement {
     });
 
     this.querySelector('textarea').addEventListener('change', e => {
-      debugger
-      console.log(e);
       e.stopPropagation();
       this.dispatchEvent(new CustomEvent('change', {
         detail: {
@@ -57,18 +55,6 @@ class HeadingBlock extends HTMLElement {
         bubbles: true
       }));
     });
-
-    // this.querySelector('input').addEventListener('focusout', e => {
-    //   console.log(e);
-    //   debugger
-    // });
-
-    // this.addEventListener('focusout', e => {
-    //   debugger
-    //   // e.stopPropagation();
-    //   // debugger
-		// 	// this.value = e.detail.value;
-		// });
   }
 }
 

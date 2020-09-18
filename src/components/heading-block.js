@@ -28,11 +28,9 @@ class HeadingBlock extends HTMLElement {
     this.appendChild(template.content.cloneNode(true));
 
     const inputs = this.querySelectorAll('input');
-    debugger
+
     [...inputs].forEach(input => {
-      debugger
       input.addEventListener('change', e => {
-        debugger
         e.stopPropagation();
         this.dispatchEvent(new CustomEvent('change', {
           detail: {
@@ -42,18 +40,6 @@ class HeadingBlock extends HTMLElement {
         }));
       });
     })
-
-    // this.querySelector('input').addEventListener('focusout', e => {
-    //   console.log(e);
-    //   debugger
-    // });
-
-    // this.addEventListener('focusout', e => {
-    //   debugger
-    //   // e.stopPropagation();
-    //   // debugger
-		// 	// this.value = e.detail.value;
-		// });
   }
 }
 
