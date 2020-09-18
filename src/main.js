@@ -25,26 +25,12 @@ function initializeApp(data) {
 				...blockData,
 				...e.detail
 			};
-			// extend current data with new data
-			// switch (e.detail.type) {
-			// 	case 'template':
-			// 		newBlockData.template = e.detail.template;
-			// 		newBlockData.fields = parseTemplate(newBlockData.template);
-			// 		app.fields = newBlockData.fields;
-			// 		break;
-			// 	case 'fields':
-			// 		newBlockData.fields = e.detail.fields;
-			// 		break;
-			// 	default:
-			// 		break;
-			// }	
 
 			setEverything(newBlockData);
 		});
 	});
 
 	document.getElementById('workspace').appendChild(app);
-	app.fields = data.fields;
 }
 
 function setEverything(data) {
@@ -70,10 +56,6 @@ async function getOverrideData(data, assetId) {
 }
 
 sdk.getData(async (data) => {
-	if (window.app.assetId) {
-		const overrideData = await getOverrideData(data, window.app.assetId);
-		setEverything(overrideData);
-	}
 	
 	initializeApp(data);
 });

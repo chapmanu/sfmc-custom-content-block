@@ -18,7 +18,7 @@ export function parseTemplate (template) {
 
 export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lpForm=''}) {
 	return `
-	<div align="center" class="smc-lp__data-container">
+	<div align="center" class="smc-lp__data-container" style="min-height: 300px; background-color: #a50034;">
 		<div class="smc-lp__text-conatiner">
 			<h1 class="smc-lp__title">
 				${lpHeader}

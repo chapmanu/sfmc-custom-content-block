@@ -48,6 +48,10 @@ class HeadingBlock extends HTMLElement {
 
     this.querySelector('textarea').addEventListener('change', e => {
       e.stopPropagation();
+      console.log(e);
+      e.target.value = e.currentTarget.value.replace(/\/<!\[CDATA\[\//, '')
+      e.target.value = e.currentTarget.value.replace(/\/]]>\//, '')
+
       this.dispatchEvent(new CustomEvent('change', {
         detail: {
           [e.currentTarget.id]: e.currentTarget.value
