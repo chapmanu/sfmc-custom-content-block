@@ -17,9 +17,9 @@ template.innerHTML = `
   </div>
 </div>
 <div class="slds-form-element">
-  <label class="slds-form-element__label" for="lpForm">Textarea Label</label>
+  <label class="slds-form-element__label" for="lpForm">Form</label>
   <div class="slds-form-element__control">
-    <textarea id="lpForm" rows="8" class="slds-textarea" placeholder="Placeholder Text"></textarea>
+    <textarea id="lpForm" rows="8" class="slds-textarea" placeholder="Add Form Content"></textarea>
   </div>
 </div>
 `;
@@ -48,7 +48,6 @@ class HeadingBlock extends HTMLElement {
 
     this.querySelector('textarea').addEventListener('change', e => {
       e.stopPropagation();
-      console.log(e);
       e.target.value = e.currentTarget.value.replace(/\/<!\[CDATA\[\//, '')
       e.target.value = e.currentTarget.value.replace(/\/]]>\//, '')
 

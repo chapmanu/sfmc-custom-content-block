@@ -3,7 +3,9 @@ import './image-card';
 
 const template = document.createElement('template');
 template.innerHTML = `
-<button class="slds-button slds-button_neutral">Select</button>
+<div class="slds-m-top_small slds-m-bottom_small">
+<button class="slds-button slds-button_neutral slds-align_absolute-center">Select Image</button>
+</div>
 <div class="slds-grid slds-gutters slds-wrap slds-grid_vertical-stretch" style="display: none;"></div>
 `;
 
