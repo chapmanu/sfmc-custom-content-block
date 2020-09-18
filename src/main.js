@@ -1,10 +1,7 @@
 import './components/templating-block-app';
-// import './components/heading-block';
-// import './components/imageSelector';
 import SDK from 'blocksdk';
 import { getHtml, parseTemplate } from './lib/templating-block-utils';
 import { getBlock } from './lib/api';
-import $ from "jquery";
 
 // SSL OVERRIDE IS SET TO TRUE MEANING USE FOR LOCAL DEV
 // TODO: SET TO FALSE FOR PRODUCTION?
@@ -42,20 +39,6 @@ function setEverything(data) {
 	sdk.setSuperContent(getHtml(data));
 }
 
-async function getOverrideData(data, assetId) {
-	data.template = await getBlock(assetId);
-	data.fields = parseTemplate(data.template).map((field, idx) => {
-		return {
-			...field,
-			value: data.fields && data.fields[idx] && data.fields[idx].value || ''
-		};
-	});
-	data.locked = true;
-
-	return data;
-}
-
 sdk.getData(async (data) => {
-	
 	initializeApp(data);
 });
