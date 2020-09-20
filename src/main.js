@@ -2,6 +2,7 @@ import './components/templating-block-app';
 import SDK from 'blocksdk';
 import { getHtml, parseTemplate } from './lib/templating-block-utils';
 import { getBlock } from './lib/api';
+import { FocusedImage } from "image-focus"
 
 // SSL OVERRIDE IS SET TO TRUE MEANING USE FOR LOCAL DEV
 // TODO: SET TO FALSE FOR PRODUCTION?

@@ -1,5 +1,3 @@
-import $ from "jquery";
-
 const placeholderRegex = /\[\[(\w+)\|([^|]+)\|([^\]]*)\]\]/g;
 
 export function parseTemplate (template) {
@@ -17,8 +15,9 @@ export function parseTemplate (template) {
 }
 
 export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lpForm=''}) {
+	
 	return `
-	<div align="center" class="smc-lp__data-container" style="min-height: 300px;">
+	<div align="center" class="smc-lp__data-container">
 		<div class="smc-lp__text-conatiner">
 			<h1 class="smc-lp__title">
 				${lpHeader}
@@ -30,7 +29,9 @@ export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lp
 		<div class="smc-lp__form-container">
 			${lpForm}
 		</div>
-		<img src="${lpBackgroundImage}"/>
+		<div class="focuspoint">
+			<img class="focused-image" src="${lpBackgroundImage}"/>
+		</div>
 	</div>
 `;
 }
