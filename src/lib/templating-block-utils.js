@@ -17,7 +17,7 @@ export function parseTemplate (template) {
 export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lpForm=''}) {
 	
 	return `
-	<div align="center" class="smc-lp__data-container">
+	<div align="center" class="smc-lp__data-container focuspoint">
 		<div class="smc-lp__text-conatiner">
 			<h1 class="smc-lp__title">
 				${lpHeader}
@@ -29,9 +29,7 @@ export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lp
 		<div class="smc-lp__form-container">
 			${lpForm}
 		</div>
-		<div class="focuspoint">
-			<img class="focused-image" src="${lpBackgroundImage}"/>
-		</div>
+		<img class="focused-image" src="${lpBackgroundImage}"/>
 	</div>
 `;
 }
