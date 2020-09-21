@@ -14,16 +14,16 @@ export function parseTemplate (template) {
 	return fields;
 }
 
-export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lpForm='', dataFocusX=0, dataFocusY=0, dataFocusW=0, dataFocusH=0}) {
-	
+export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lpForm='', ...rest}) {
+	debugger
 	return `
 	<div 
 		align="center" 
 		class="smc-lp__data-container focuspoint"
-		data-focus-x=${dataFocusX}
-		data-focus-y=${dataFocusY}
-		data-image-w=${dataFocusW}
-		data-image-h=${dataFocusH}
+		data-focus-x=${rest['data-focus-x']}
+		data-focus-y=${rest['data-focus-y']}
+		data-image-w=${rest['data-image-w']}
+		data-image-h=${rest['data-image-h']}
 	>
 		<div class="smc-lp__text-conatiner">
 			<h1 class="smc-lp__title">
