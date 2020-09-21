@@ -9,7 +9,7 @@ template.innerHTML = `
 <div class="slds-grid slds-gutters slds-wrap slds-grid_vertical-stretch" style="display: none;"></div>
 `;
 
-class ImageSelector extends HTMLElement {
+class ImageSelectorBlock extends HTMLElement {
 	constructor () {
 		super();
 
@@ -34,7 +34,12 @@ class ImageSelector extends HTMLElement {
 	_getImageHTML(image) {
 		return `
 			<div class="slds-col slds-size_1-of-2 slds-p-top_x-small">
-				<image-card id="${image.id}" name="${image.name}" url="${image.fileProperties.publishedURL}"></image-card>
+				<image-card 
+					id="${image.id}" 
+					name="${image.name}" 
+					url="${image.fileProperties.publishedURL}" 
+					imgHeight="${image.fileProperties.height}" 
+					imgWidth="${image.fileProperties.width}"></image-card>
 			</div>
 		`;
 	}
@@ -44,4 +49,4 @@ class ImageSelector extends HTMLElement {
 	}
 }
 
-customElements.define('image-selector', ImageSelector);
+customElements.define('image-selector-block', ImageSelectorBlock);

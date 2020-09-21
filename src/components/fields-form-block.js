@@ -24,7 +24,7 @@ template.innerHTML = `
 </div>
 `;
 
-class HeadingBlock extends HTMLElement {
+class FieldsFormBlock extends HTMLElement {
   constructor() {
     super();
     this.inputVal = '';
@@ -61,4 +61,4 @@ class HeadingBlock extends HTMLElement {
   }
 }
 
-customElements.define('fields-block', HeadingBlock);
+customElements.define('fields-form-block', FieldsFormBlock);

@@ -1,4 +1,4 @@
-import './image-selector';
+import './image-selector-block';
 // import './heading-block';
 
 const template = document.createElement('template');
