@@ -36,7 +36,7 @@ export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lp
 		<div class="smc-lp__form-container">
 			${lpForm}
 		</div>
-		<img class="focused-image" src="${lpBackgroundImage}"/>
+		<img class="focused-image" src="${lpBackgroundImage}" style="height: 100% !important;"/>
 	</div>
 `;
 }
