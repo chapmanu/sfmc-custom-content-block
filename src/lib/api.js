@@ -29,11 +29,15 @@ function getImagesCached() {
 				query: {
 					property: 'fileProperties.extension',
 					simpleOperator: 'in',
-					value: ["tif", "tiff", "bmp","jpg", "jpeg", "gif", "png"]
+					value: ["tif", "tiff", "bmp","jpg", "jpeg", "gif", "png"],
+				},
+				page: {
+					page: 1,
+					pageSize: 2000
 				}
 			});
 		}
-
+		debugger
 		return images;
 	}
 }

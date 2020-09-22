@@ -18,7 +18,6 @@ function initializeApp(data) {
 	// respond to app changes
 	app.addEventListener('change', e => {
 		// always get current data
-		debugger
 		sdk.getData(blockData => {
 			const newBlockData = {
 				...blockData,

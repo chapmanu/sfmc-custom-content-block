@@ -33,9 +33,7 @@ class FieldsFocusBlock extends HTMLElement {
       const positionValues = e.currentTarget.value.split(' ');
       const focusVals = {};
       positionValues.map( positionValue => focusVals[positionValue.match(/(data-.+)=/).slice(-1)[0]] = positionValue.match(/"(.+)"/).slice(-1)[0])
-      debugger
       e.stopPropagation();
-      debugger
       this.dispatchEvent(new CustomEvent('change', {
         detail: {
           focusVals

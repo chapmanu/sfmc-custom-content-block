@@ -15,7 +15,6 @@ export function parseTemplate (template) {
 }
 
 export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lpForm='', ...rest}) {
-	debugger
 	return `
 	<div 
 		align="center" 
