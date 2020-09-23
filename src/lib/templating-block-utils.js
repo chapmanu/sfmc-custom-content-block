@@ -15,14 +15,15 @@ export function parseTemplate (template) {
 }
 
 export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lpForm='', ...rest}) {
+	console.log(rest)
 	return `
 	<div 
 		align="center" 
 		class="smc-lp__data-container focuspoint"
-		data-focus-x=${rest['data-focus-x']}
-		data-focus-y=${rest['data-focus-y']}
-		data-image-w=${rest['data-image-w']}
-		data-image-h=${rest['data-image-h']}
+		data-focus-x=${rest.focusVals ? rest.focusVals['data-focus-x']: ''}
+		data-focus-y=${rest.focusVals ? rest.focusVals['data-focus-y']: ''}
+		data-image-w=${rest.focusVals ? rest.focusVals['data-image-w']: ''}
+		data-image-h=${rest.focusVals ? rest.focusVals['data-image-h']: ''}
 	>
 		<div class="smc-lp__text-conatiner">
 			<h1 class="smc-lp__title">

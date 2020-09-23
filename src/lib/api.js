@@ -37,7 +37,7 @@ function getImagesCached() {
 				}
 			});
 		}
-		debugger
+
 		return images;
 	}
 }

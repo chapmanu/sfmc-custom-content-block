@@ -2,7 +2,7 @@ const template = document.createElement('template');
 template.innerHTML = `
 <div class="focus-options">
   <div>
-    <h3 style="text-transform: uppercase;">Set Image Focus</h3>
+    <h3>Set Image Focus (Optional)</h3>
   </div>
   <small>Use <a target="_blank" href="http://jonom.github.io/jquery-focuspoint/demos/helper/index.html">Helper Tool</a> to get image focus values</small>
 </div>
