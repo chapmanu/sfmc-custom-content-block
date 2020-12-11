@@ -16,7 +16,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 
 const store = new MongoDBStore(
 	{
-		uri: `mongodb://${process.env.DBUSER}:${process.env.DBPASSWORD}@ds211708.mlab.com:11708/salesforce`,
+    uri: `mongodb+srv://salesforce:${process.env.DBPASSWORD}@salesforce.xgys7.mongodb.net/${process.env.DBUSER}?retryWrites=true&w=majority`,
 		collection: 'mySessions'
 	});
 
