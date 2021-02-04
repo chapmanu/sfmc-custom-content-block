@@ -14,6 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const MongoDBStore = require('connect-mongodb-session')(session);
 
+// CONNECTS TO THE MONGODB TO STORE THE TOKEN FOR AUTH REQUESTS TO SFMC
 const store = new MongoDBStore(
 	{
     uri: `mongodb+srv://salesforce:${process.env.DBPASSWORD}@salesforce.xgys7.mongodb.net/${process.env.DBUSER}?retryWrites=true&w=majority`,
@@ -25,12 +26,11 @@ store.on('error', function(error) {
 });
 
 const app = express();
-// app.set('trust proxy', 1)
 
 // wherever this is hosted needs to have those
 // environment variables set to the MC app values
 // given to you by the app center page
-const secret = process.env.APP_SIGNATURE;
+// THIS VALUES COME FROM THE API INTEGRATION PACKAGE THAT IS INSTALLED ON OUR SFMC SPECIFIC INSTANCE
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const appID = process.env.APP_ID;
@@ -51,6 +51,7 @@ if (process.env.NODE_ENV === 'production') {
 	sess.cookie.secure = true;
 }
 
+// FUNCTION IS USED TO SET SESSION ACCESS TOKEN FOR AUTH REQUESTS TO SFMC CONTENT BUILDER
 function waitForAuth(req, ttl) {
 	return new Promise(function (resolve, reject) {
 		const timeout = setTimeout(
@@ -61,12 +62,14 @@ function waitForAuth(req, ttl) {
 			ttl
 		);
 
+    // IF THERE IS ALREADY A VALID ACCESS TOKEN AND SESSION CLEARS TIMERS AND LISTENERS
 		if (req.session && req.session.accessToken) {
 			clearTimeout();
 			removeListener();
 			resolve();
 		}
 
+    // VERIFYS THE SESSION ID IS CURRENT IF SO SETS THE ACCESS TOKEN TO THE SESSION AND RESOLVES PROMISE
 		const listener = function (authData) {
 			if (authData.sessionID === req.sessionID) {
 				req.session.accessToken = authData.accessToken;
@@ -80,10 +83,12 @@ function waitForAuth(req, ttl) {
 			authEmitter.removeListener('authed', listener);
 		};
 
+    // LISTENS FOR THE 'authed' EVENT AND CALLS THE LISTENER FUNCTION TO SET THE ACCESS TOKEN TO THE SESSION FOR AUTH REQUESTS
 		authEmitter.addListener('authed', listener);
 	});
 }
 
+// MIDDLEWARE FUNCTION FOR VERIFYING IF VALID SESSION AND ACCESS TOKEN IF NOT ATTEMPTS TO CREATE AUTH SESSION AND TOKEN THROUGH 'waitForAuth' FUNCTION
 function verifyAuth(req, res, next) {
 
 	if (req.session && req.session.accessToken) {
@@ -105,7 +110,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // for the UI.
 app.use(session(sess));
 
-// app.use('/', express.static('dist'));
+// CREATING USE FOR STATIC FILES IN CUSTOM CONTENT BLOCK USE
 app.use('/public', express.static('dist'));
 app.use('*/icon.png', express.static('dist/icon.png'));
 app.use('*/dragIcon.png', express.static('dist/dragIcon.png'));
@@ -130,6 +135,8 @@ app.get(['/', '/block/:assetId(\\d+)'], (req, res) => {
 });
 
 app.use((req, res, next) => {
+  // IF NO SESSION OR TOKEN MAKES A POST REQUEST TO API TOKEN ENDPOINT AND SETS ACCESS TOKEN TO SESSION AND EMITS 'authed' EVENT
+  // WITH APPROPRIATE SESSION ID AND ACCESS TOKEN FOR USE IN THE waitForAuth FUNCTION ABOVE 
 	if (!req.session || !req.session.accessToken) {
 		axios({
 			method: 'post',

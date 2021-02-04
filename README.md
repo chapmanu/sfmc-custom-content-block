@@ -1,5 +1,19 @@
 # Chapman Salesforce Custom Content Blocks
 
+## Build Commands
+
+### npm start
+
+Run `npm start` to start the development server and navigate to localhost:3000 to display the front-end ui
+
+### npm run build
+
+To start the webpack build of the front-end UI for deployment to Heroku
+
+### npm run deploy
+
+To deploy the app to Heroku
+
 ## Recommended Reading/Viewing
 
 Salesforce Trailhead: Salesforce Trailhead [here](https://trailhead.salesforce.com/content/learn/modules/content-builder-block-sdk) for more info on creating Custom Content Blocks
@@ -8,7 +22,7 @@ Salesfoce Developer Walkthrough: Salesforce developer walks through of Custom Co
 
 ## Salesforce Cloud Package
 
-To create a Custom Content Block a salesforce package needs to be installed with the proper configuration. Currently IS&T only has access to create and install packages.
+To create a Custom Content Block a salesforce package needs to be installed with the proper configuration. Currently IS&T William and Mike only has access to create and install packages.
 
 ### Custom Content Block Component
 
@@ -26,7 +40,7 @@ SMCTech uses Salesforce Custom Content Blocks through Server to Server API Integ
 
 ### Auth Route
 
-API access is granted through the auth routes created when the [API Integration](#API-Integration-Component) Component was installed on the packaged by posting a request with the 
+API access is granted through the auth routes created when the [API Integration](#API-Integration-Component) Component was installed on the packaged by posting a request
 
 ### REST Endpoint
 
@@ -34,7 +48,7 @@ Asset and data retrieval is used by creating a request to the REST API endpoint 
 
 ### Hosting
 
-Hosting for the custom content block is currently handled on Heroku for staging allowing for quick testing. To begin update heroku `origin` to the current content block repo 
+Hosting for the custom content block is currently handled on Heroku. To begin update heroku `origin` to the current content block repo 
 
 ## Client To Server Asset Requests
 
@@ -44,12 +58,14 @@ Currently the salesforce custom block server is built using `nodejs` with `expre
 
 Front end requests are proxied on the server to the REST API endpoint created when the [API Integration](#API-Integration-Component)
 
-### Assets
-
 ### Sessions
 
-Each API requests needs to be served with an access token in the headers with the `Authorization` value and access token. [Salesforce documentation]() recommends storing the access token to prevent requesting an access token for each request. Access tokens are valid for 20 minutes and is recommended you retrieve a new token every 18 minutes. `mongoDB` using mLab with [`express-session`](https://github.com/expressjs/session) along with [`connect-mongodb-session`](https://github.com/mongodb-js/connect-mongodb-session#readme) are used to create sessions and store the access token for requests made in the 18 minute valid access token window. Afterward the token is then refreshed on the next requests. 
+Each API requests needs to be served with an access token in the headers with the `Authorization` value and access token. Salesforce recommends storing the access token to prevent requesting an access token for each request. Access tokens are valid for 20 minutes and is recommended you retrieve a new token every 18 minutes. `mongoDB` using mLab with [`express-session`](https://github.com/expressjs/session) along with [`connect-mongodb-session`](https://github.com/mongodb-js/connect-mongodb-session#readme) are used to create sessions and store the access token for requests made in the 18 minute valid access token window. Afterward the token is then refreshed on the next requests. 
 
 #### Images
 
 Images are requested using the `query` type outlined in the [salesforce documentation](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-apis.meta/mc-apis/routes.htm#detail_advancedQuery) for the advanced query. It is currently querying by file extensions specifically `["tif", "tiff", "bmp","jpg", "jpeg", "gif", "png"]`
+
+## Components
+
+Components directory contains the UI for the custom content block and are created using [Javascript Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements). These essentially use listeners and lifecycle methods to add and update content for the Content Block dispaly

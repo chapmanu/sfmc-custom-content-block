@@ -14,6 +14,7 @@ export function parseTemplate (template) {
 	return fields;
 }
 
+// THIS IS WHAT IS ULTIMATELY USED TO CREATE THE HTML CONTENT AND DISPLAYED
 export function getHtml({lpHeader='', lpSubheader='', lpBackgroundImage = '', lpForm='', ...rest}) {
 	console.log(rest)
 	return `

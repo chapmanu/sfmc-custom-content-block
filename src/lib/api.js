@@ -1,3 +1,5 @@
+// MAKES THE POST REQUEST FOR DATA TO THE BACKEND SERVER THE BACKEND IS LISTENING 
+// FOR ANY REQUEST WITH THE '/proxy/' URL TO THEN REACH OUT TO SFMC WITH THE APPORPRIATE REQUEST
 async function post (url, data) {
 	const response = await fetch('/proxy/' + url, {
 		method: 'POST',
@@ -11,6 +13,7 @@ export async function getBlock(id) {
 	return await response.json();
 }
 
+// USED FOR RETRIEVING TEMPLATES FOR DISPALY IN THE CUSTOM CONTENT BLOCK VIEW
 export async function getCustomTemplates() {
 	return await post('asset/v1/content/assets/query', {
 		query: {
@@ -21,6 +24,7 @@ export async function getCustomTemplates() {
 	});
 }
 
+// RETRIEVES THE IMAGES  IF THEY HAVE BEEN RETRIEVED ALREADY THEN RETRIEVES CACHED IMAGES?
 function getImagesCached() {
 	let images;
 	return async () => {
