@@ -69,3 +69,7 @@ Images are requested using the `query` type outlined in the [salesforce document
 ## Components
 
 Components directory contains the UI for the custom content block and are created using [Javascript Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements). These essentially use listeners and lifecycle methods to add and update content for the Content Block dispaly
+
+## Block Tester and Examples
+
+For testing SFMC Custom Content block use [this block tester](http://blocktester.herokuapp.com/) which can be used with localhost and any hosted content blocks. [See Salesforce Tutorial](https://www.youtube.com/watch?v=eJ74dxJ_JSo) for more information. For examples on Custom Content Block [See Salesforce Documentation](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/content-sdk.htm). SFMC also has a [github for more deatils](https://github.com/salesforce-marketingcloud/blocksdk)
