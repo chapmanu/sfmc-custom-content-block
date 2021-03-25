@@ -26,7 +26,9 @@ To create a Custom Content Block a salesforce package needs to be installed with
 
 ### Custom Content Block Component
 
-Start by installing the component Custom Content Block. Enter the appropriate Name and Description which will be used intarnally for Salesforce display when selecting the Custom Content Block. The `Endpoint URL` is the url where the component is hosted, for more info see [hosting section](#hosting). For more details about the Custom Block Content Component see [salesforce documentation](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/create-content-block.htm)
+Start by installing the component Custom Content Block. Enter the appropriate Name and Description which will be used intarnally for Salesforce display when selecting the Custom Content Block. The `Endpoint URL` is the url where the component is hosted, for more info see [hosting section](#hosting). 
+
+For more details about the Custom Block Content Component see [salesforce documentation](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/create-content-block.htm)
 
 ### API Integration Component
 
